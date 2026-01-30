@@ -1,17 +1,14 @@
-
-
 from agno.knowledge.knowledge import Knowledge
 from agno.vectordb.chroma import ChromaDb
 
-# Create vector DB for knowledge
+print("knowledge started running")
+# vector DB for knowledge
 vector_db = ChromaDb(
     collection="db_schema",
     path="tmp/chromadb"
 )
 
 knowledge = Knowledge(vector_db=vector_db)
-
-# ---------- ACTUAL DATABASE SCHEMA FROM YOUR SCREENSHOTS ----------
 
 schema_text = """
 DATABASE TABLES AND RELATIONSHIPS
@@ -41,7 +38,7 @@ IMPORTANT:
 - Guest is linked to User using:
     Guest.createdBy -> User.id
 
-------------------------------------------------------------
+--------
 
 TABLE "Tour"
 COLUMNS:
@@ -58,8 +55,7 @@ PackageId, VehicleId, VendorId,
 OrganizationId, pickupTime, revision,
 isForEmployee, updatedBy, tourInfo,
 remark, isDriverCreated
-
-------------------------------------------------------------
+------
 
 TABLE "TourGuest"
 COLUMNS:
@@ -68,8 +64,7 @@ GuestId, TourId, revision, costCenterId
 RELATIONSHIPS:
 TourGuest.GuestId  -> Guest.id
 TourGuest.TourId   -> Tour.id
-
-------------------------------------------------------------
+-------
 
 QUERY RULES FOR AGENT:
 
@@ -81,7 +76,6 @@ QUERY RULES FOR AGENT:
 4. Always use DOUBLE QUOTES for table and column names.
 """
 
-# Insert schema into knowledge base
-knowledge.insert(text_content=schema_text)
 
-print("✅ Knowledge loaded with real DB schema")
+knowledge.insert(text_content=schema_text)
+print("Knowledge loaded with real DB schema")
